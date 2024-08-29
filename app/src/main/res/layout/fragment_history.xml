@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Настройки"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:text="Выбор темы" />
+
+    <RadioGroup
+        android:id="@+id/radio_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"> <!-- Установлено вертикальное направление -->
+
+        <RadioButton
+            android:id="@+id/radio_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Светлая" />
+
+        <RadioButton
+            android:id="@+id/radio_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Тёмная" />
+
+        <RadioButton
+            android:id="@+id/radio_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Системная" />
+    </RadioGroup>
+
+
+    <CheckBox
+        android:id="@+id/checkbox_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Измерять скорость загрузки" />
+
+    <CheckBox
+        android:id="@+id/checkbox_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Измерять скорость отдачи" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сохранить" />
+</LinearLayout>

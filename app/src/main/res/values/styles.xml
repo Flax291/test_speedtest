@@ -1,0 +1,21 @@
+<!-- styles.xml -->
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#2196F3</item> <!-- Светло-синие оттенки -->
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorAccent">#FFC107</item>
+    </style>
+
+    <style name="LightTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">#BBDEFB</item> <!-- Светло-голубой цвет -->
+        <item name="colorPrimaryDark">#90CAF9</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">#212121</item> <!-- Темный цвет -->
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="app_name">testSpeedtest</string>
+    <string name="speed_test">Speed Test</string>
+    <string name="history">Settings</string>
+    <string name="Test">Start Test</string>
+    <string name="text_speed_download">Download</string>
+    <string name="speed_download">Download Speed: 0 kbps</string>
+    <string name="text_speed_upload">upload</string>
+    <string name="speed_upload">Upload Speed: 0 kbps</string>
+    <string name="title_home">Home</string>
+</resources>
