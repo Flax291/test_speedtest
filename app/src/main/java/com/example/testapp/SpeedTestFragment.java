@@ -107,25 +107,23 @@ public class SpeedTestFragment extends Fragment {
         textTestStatus.append(lastMessage);
 
         buttonStartTest.setOnClickListener(v -> {
-            if (!viewModel.isTesting) {
-                if (viewModel.measureDownload || viewModel.measureUpload) {// Проверяем настройки теста
+            if (viewModel.isTesting) {
+                stopTest();  // Ensure that the test stops completely when the button is pressed
+            } else {
+                if (viewModel.measureDownload || viewModel.measureUpload) {
                     viewModel.isTesting = true;
+                    isPaused = false;
                     buttonStartTest.setText("Stop Test");
                     lastMessage = "";
-                    startTests();// Запуск тестов
+                    startTests();
                     updateHistoryFragmentTestingState(true);
                 } else {
                     lastMessage = "Выберите в настройках, что хотите протестировать";
                     textTestStatus.setText(lastMessage);
                 }
-            } else {
-                if (!isPaused) {// Если тест запущен и не на паузе, останавливаем
-                    stopTest();
-                } else {
-                    resumeTest(); // Возобновляем тест
-                }
             }
         });
+
 
         buttonShowAdditionalInfo.setOnClickListener(v -> {
             showAdditionalInfo = !showAdditionalInfo;// Переключаем флаг отображения дополнительной информации
@@ -200,19 +198,21 @@ public class SpeedTestFragment extends Fragment {
         }, 0);
     }
 
-    public void stopTest() {// Остановка теста
+    public void stopTest() {
         viewModel.isTesting = false;
-        handler.removeCallbacksAndMessages(null);// Удаляем все отложенные вызовы
+        handler.removeCallbacksAndMessages(null);
         buttonStartTest.setText("Start Test");
         textTestStatus.setText(testStatus);
-        isPaused = false; // Сбрасываем флаг паузы
+        isPaused = false;
 
-        // Сохраняем настройки после завершения теста
-        savePendingSettings();
-        updateHistoryFragmentTestingState(false);// Обновляем состояние в HistoryFragment
+
+        updateHistoryFragmentTestingState(false);
+
+
     }
 
     private void resumeTest() {// Возобновление теста после паузы
+        if (viewModel.isTesting) return; // Если тест уже идет, ничего не делаем
         isPaused = false; // Сбрасываем флаг паузы
         updateUI(); // Обновляем UI
         startTests(); // Возобновляем тест
@@ -379,23 +379,25 @@ public class SpeedTestFragment extends Fragment {
         });
     }
 
-    public void loadSettingsAndPrepareSpeed() {// Загружаем настройки и подготавливаем тест
+    public void loadSettingsAndPrepareSpeed() {
         if (getActivity() == null) return;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(HistoryFragment.PREFS_NAME, Context.MODE_PRIVATE);
         boolean newMeasureDownload = sharedPreferences.getBoolean(HistoryFragment.KEY_DOWNLOAD, true);
         boolean newMeasureUpload = sharedPreferences.getBoolean(HistoryFragment.KEY_UPLOAD, true);
 
-        // Сохраняем настройки до завершения текущего теста
         if (viewModel.isTesting) {
-            pendingDownloadSetting = newMeasureDownload;
-            pendingUploadSetting = newMeasureUpload;
-        } else {
-            viewModel.measureDownload = newMeasureDownload;
-            viewModel.measureUpload = newMeasureUpload;
-            updateUI();// Обновляем UI с новыми настройками
+            // Stop current measuring if the preferences have changed during the test
+            if (newMeasureDownload != viewModel.measureDownload || newMeasureUpload != viewModel.measureUpload) {
+                stopTest(); // Immediately stop the test if the state changes
+            }
         }
+
+        viewModel.measureDownload = newMeasureDownload;
+        viewModel.measureUpload = newMeasureUpload;
+        updateUI();
     }
+
 
     private void savePendingSettings() {// Сохраняем отложенные настройки после завершения теста
         if (getActivity() == null) return;
