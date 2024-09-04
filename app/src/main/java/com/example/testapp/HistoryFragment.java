@@ -88,7 +88,6 @@ public class HistoryFragment extends Fragment {
         // Показываем тост о сохранении
         Toast.makeText(getContext(), "Настройки сохранены", Toast.LENGTH_SHORT).show();
     }
-
     private void applyTheme() {
         int themeId = radioGroupTheme.getCheckedRadioButtonId(); // ID выбранной темы
 

@@ -408,7 +408,6 @@ public class SpeedTestFragment extends Fragment {
         editor.putBoolean(HistoryFragment.KEY_UPLOAD, pendingUploadSetting);
         editor.apply();
     }
-
     private void updateHistoryFragmentTestingState(boolean isTesting) { // Обновляем состояние тестирования в HistoryFragment
         FragmentManager fragmentManager = getActivity() != null ? getActivity().getSupportFragmentManager() : null;
         if (fragmentManager != null) {

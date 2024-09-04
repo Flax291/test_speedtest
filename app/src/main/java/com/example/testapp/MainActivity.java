@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, selectedFragment)
                     .commit();
             return true;
+
         });
         if (savedInstanceState == null) {// Проверяем, если savedInstanceState равен null, это означает, что активность создаётся впервые
             speedTestFragment = new SpeedTestFragment();

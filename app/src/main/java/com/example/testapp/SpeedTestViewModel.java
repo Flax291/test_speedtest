@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * ViewModel для управления данными тестирования скорости интернета.
  */
@@ -16,3 +15,4 @@ public class SpeedTestViewModel extends ViewModel {
     public boolean measureDownload = true; // Флаг для включения/выключения измерения скорости загрузки.
     public boolean measureUpload = true;// Флаг для включения/выключения измерения скорости выгрузки.
 }
+
