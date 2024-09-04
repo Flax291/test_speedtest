@@ -100,5 +100,9 @@ public class HistoryFragment extends Fragment {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM); // По умолчанию
         }
+        // Обновите активность, чтобы сразу применить изменения
+        if (getActivity() != null) {
+            getActivity().recreate();
+        }
     }
 }

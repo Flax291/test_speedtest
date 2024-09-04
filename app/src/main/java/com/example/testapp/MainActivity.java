@@ -1,5 +1,7 @@
 package com.example.testapp;
 
+import static androidx.core.graphics.drawable.DrawableCompat.applyTheme;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(HistoryFragment.PREFS_NAME, Context.MODE_PRIVATE);
         // Извлекаем ID темы из настроек. По умолчанию используется системная тема
         int themeId = sharedPreferences.getInt(HistoryFragment.KEY_THEME, R.id.radio_system);
+        applyTheme(themeId);
 
         // Устанавливаем тему активности в зависимости от выбранного значения
         if (themeId == R.id.radio_light) {
@@ -74,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction()// Заменяем фрагмент в контейнере на новый экземпляр SpeedTestFragment
                     .replace(R.id.fragment_container, speedTestFragment)
                     .commit();
+        }
+
+    }
+
+    private void applyTheme(int themeId) {
+        if (themeId == R.id.radio_light) {
+            setTheme(R.style.LightTheme);
+        } else if (themeId == R.id.radio_dark) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme); // или ваша системная тема
         }
     }
 }

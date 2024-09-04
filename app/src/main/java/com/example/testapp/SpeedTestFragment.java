@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ public class SpeedTestFragment extends Fragment {
     private Button buttonStartTest, buttonShowAdditionalInfo;
 
     private final OkHttpClient client = new OkHttpClient(); // Класс для работы с сетью
-    private final Handler handler = new Handler();// Для управления задержками и потоками
+    private final Handler handler = new Handler(Looper.getMainLooper());// Для управления задержками и потоками
     private SpeedTestViewModel viewModel; // ViewModel для хранения состояния теста
 
     private boolean showAdditionalInfo = false;
@@ -47,7 +48,7 @@ public class SpeedTestFragment extends Fragment {
 
     // Измерения
     private static final int TEST_DURATION_MS = 20000; // Длительность теста (20 секунд)
-    private static final int UPDATE_INTERVAL_MS = 5000; //Интервал обновления (5 секунд)
+    private static final int UPDATE_INTERVAL_MS = 5000; // Интервал обновления (5 секунд)
     private static final String DOWNLOAD_URL = "https://speedtest.selectel.ru/10MB";// URL для теста загрузки
     private static final String UPLOAD_URL = "http://147.45.147.32";// URL для теста выгрузки
 
@@ -61,7 +62,7 @@ public class SpeedTestFragment extends Fragment {
     private String currentServerText = ""; // Для сохранения текста текущего сервера
 
     @Nullable
-    @Override// Раздуваем макет фрагмента
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_speedtest, container, false);
     }
@@ -69,12 +70,8 @@ public class SpeedTestFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         textCurrentServer = view.findViewById(R.id.text_current_server);
-
-        // Инициализация ViewModel
-        viewModel = new ViewModelProvider(requireActivity()).get(SpeedTestViewModel.class);
-
-        // Инициализация UI-компонентов
         textSpeedDownload = view.findViewById(R.id.text_speed_download);
         textSpeedUpload = view.findViewById(R.id.text_speed_upload);
         textAverageSpeedDownload = view.findViewById(R.id.text_average_speed_download);
@@ -85,13 +82,16 @@ public class SpeedTestFragment extends Fragment {
         buttonStartTest = view.findViewById(R.id.button_start_test);
         buttonShowAdditionalInfo = view.findViewById(R.id.button_show_additional_info);
 
+        // Инициализация ViewModel
+        viewModel = new ViewModelProvider(requireActivity()).get(SpeedTestViewModel.class);
+
         // Восстановление состояний
         if (savedInstanceState != null) {
             lastMessage = savedInstanceState.getString("LAST_MESSAGE", "");
             additionalInfoVisible = savedInstanceState.getBoolean("ADDITIONAL_INFO_VISIBLE", false);
             currentServerText = savedInstanceState.getString("CURRENT_SERVER_TEXT", ""); // Восстановление текста сервера
+            isPaused = savedInstanceState.getBoolean("IS_PAUSED", false); // Восстановление состояния паузы
         }
-
 
         textCurrentServer.setText(currentServerText);// Устанавливаем текст текущего сервера
 
@@ -108,7 +108,11 @@ public class SpeedTestFragment extends Fragment {
 
         buttonStartTest.setOnClickListener(v -> {
             if (viewModel.isTesting) {
-                stopTest();  // Ensure that the test stops completely when the button is pressed
+                if (isPaused) {
+                    resumeTest(); // Возобновляем тест
+                } else {
+                    stopTest(); // Останавливаем тест
+                }
             } else {
                 if (viewModel.measureDownload || viewModel.measureUpload) {
                     viewModel.isTesting = true;
@@ -123,7 +127,6 @@ public class SpeedTestFragment extends Fragment {
                 }
             }
         });
-
 
         buttonShowAdditionalInfo.setOnClickListener(v -> {
             showAdditionalInfo = !showAdditionalInfo;// Переключаем флаг отображения дополнительной информации
@@ -143,27 +146,31 @@ public class SpeedTestFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("LAST_MESSAGE", lastMessage);
         outState.putBoolean("ADDITIONAL_INFO_VISIBLE", additionalInfoVisible);
-        outState.putString("CURRENT_SERVER_TEXT", textCurrentServer.getText().toString()); // Сохранение текста текущего сервера
+        outState.putString("CURRENT_SERVER_TEXT", textCurrentServer.getText().toString());
+        outState.putBoolean("IS_PAUSED", isPaused); // Сохраняем состояние паузы
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Ставим тест на паузу при изменении темы
+        // Примените логику восстановления UI при изменении конфигурации
         if (viewModel.isTesting) {
+            // При изменении конфигурации мы считаем, что тест приостановлен
             isPaused = true;
-            buttonStartTest.setText("Continue Test");
-
-            stopTest(); // Останавливаем тест, чтобы не прерывать его без необходимости
+            buttonStartTest.setText("Start Test");
         }
+        updateUI(); // После изменения конфигурации UI будет обновляться через Handler
     }
 
     private void updateUI() { // Обновляем UI с текущими данными
         textSpeedDownload.setText("Current Download Speed: " + formatSpeed(getCurrentDownloadSpeed()));
         textSpeedUpload.setText("Current Upload Speed: " + formatSpeed(getCurrentUploadSpeed()));
-        buttonStartTest.setText(viewModel.isTesting ? (isPaused ? "Continue Test" : "Stop Test") : "Start Test");
+        buttonStartTest.setText(viewModel.isTesting ? (isPaused ? "Start Test" : "Stop Test") : "Start Test");
         textTestStatus.setText(testStatus);
         textTestStatus.append(lastMessage);
+        if (showAdditionalInfo) {
+            updateAverageSpeeds(); // Обновляем средние и медианные скорости
+        }
     }
 
     private double getCurrentDownloadSpeed() {// Получаем текущую скорость загрузки
@@ -205,10 +212,7 @@ public class SpeedTestFragment extends Fragment {
         textTestStatus.setText(testStatus);
         isPaused = false;
 
-
         updateHistoryFragmentTestingState(false);
-
-
     }
 
     private void resumeTest() {// Возобновление теста после паузы
@@ -348,7 +352,7 @@ public class SpeedTestFragment extends Fragment {
         List<Double> sortedSpeeds = new ArrayList<>(speeds);
         sortedSpeeds.sort(Double::compareTo);
         int middle = sortedSpeeds.size() / 2;
-        /// Если список четный, медиана — среднее значение двух центральных элементов
+        // Если список четный, медиана — среднее значение двух центральных элементов
         return (sortedSpeeds.size() % 2 == 0) ? (sortedSpeeds.get(middle - 1) + sortedSpeeds.get(middle)) / 2 : sortedSpeeds.get(middle);
     }
 
@@ -387,9 +391,8 @@ public class SpeedTestFragment extends Fragment {
         boolean newMeasureUpload = sharedPreferences.getBoolean(HistoryFragment.KEY_UPLOAD, true);
 
         if (viewModel.isTesting) {
-            // Stop current measuring if the preferences have changed during the test
             if (newMeasureDownload != viewModel.measureDownload || newMeasureUpload != viewModel.measureUpload) {
-                stopTest(); // Immediately stop the test if the state changes
+                stopTest();
             }
         }
 
@@ -397,7 +400,6 @@ public class SpeedTestFragment extends Fragment {
         viewModel.measureUpload = newMeasureUpload;
         updateUI();
     }
-
 
     private void savePendingSettings() {// Сохраняем отложенные настройки после завершения теста
         if (getActivity() == null) return;
