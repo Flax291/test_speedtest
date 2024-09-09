@@ -1,21 +1,25 @@
-<!-- styles.xml -->
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#2196F3</item> <!-- Светло-синие оттенки -->
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#FFC107</item>
+        <item name="colorPrimary">#42A5F5</item> <!-- Светло-синий -->
+        <item name="colorPrimaryDark">#1E88E5</item> <!-- Тёмно-синий -->
+        <item name="colorAccent">#FFCA28</item> <!-- Яркий акцент -->
+        <item name="android:textColor">#212121</item> <!-- Темный текст -->
+        <item name="android:background">#FFFFFF</item> <!-- Белый фон -->
     </style>
 
-    <style name="LightTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">#BBDEFB</item> <!-- Светло-голубой цвет -->
-        <item name="colorPrimaryDark">#90CAF9</item>
-        <item name="colorAccent">#FF4081</item>
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#0E0E0E</item> <!-- Нежно-голубой -->
+        <item name="colorPrimaryDark">#4E9FC8</item>
+        <item name="colorAccent">#E63F2D</item> <!-- Коралловый акцент -->
+        <item name="android:background">#D3FF96</item> <!-- Светло-серый фон -->
+        <item name="android:textColor">#333333</item> <!-- Темный текст -->
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">#212121</item> <!-- Темный цвет -->
+    <style name="DarkTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">#F8F5F5</item> <!-- Темный цвет -->
         <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorAccent">#FF4081</item> <!-- Яркий акцент -->
+        <item name="android:background">#303030</item> <!-- Темный фон -->
+        <item name="android:textColor">#FFFFFF</item> <!-- Белый текст -->
     </style>
 </resources>

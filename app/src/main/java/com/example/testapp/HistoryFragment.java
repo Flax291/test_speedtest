@@ -85,11 +85,11 @@ public class HistoryFragment extends Fragment {
             ((MainActivity) getActivity()).restoreTestingState();
         }
 
-        // Показываем тост о сохранении
-        Toast.makeText(getContext(), "Настройки сохранены", Toast.LENGTH_SHORT).show();
+
     }
+
     private void applyTheme() {
-        int themeId = radioGroupTheme.getCheckedRadioButtonId(); // ID выбранной темы
+        int themeId = radioGroupTheme.getCheckedRadioButtonId();
 
         // Применяем тему по выбору
         if (themeId == R.id.radio_light) {
@@ -99,5 +99,11 @@ public class HistoryFragment extends Fragment {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM); // По умолчанию
         }
+
+        // Перезагружаем активность, чтобы применить изменения
+        if (getActivity() != null) {
+            getActivity().recreate();
+        }
     }
+
 }

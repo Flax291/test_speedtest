@@ -1,111 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:padding="8dp"
 
-    <TextView
-        android:id="@+id/text_current_server"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current Server: None"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:autoLink="web"
-        android:linksClickable="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    android:fillViewport="true"> <!-- Фон для ScrollView -->
 
-    <TextView
-        android:id="@+id/text_test_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp"
-        android:visibility="visible"/>
-
-    <TextView
-        android:id="@+id/text_speed_download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Download Speed"
-        android:textSize="22sp"
-        android:layout_gravity="center"
-        android:padding="16dp"/>
-
-    <TextView
-        android:id="@+id/text_speed_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Speed"
-        android:textSize="22sp"
-        android:layout_gravity="center"
-        android:padding="16dp"/>
-
-    <!-- Здесь будут дополнительные текстовые поля, которые будете показывать/скрывать -->
-    <TextView
-        android:id="@+id/text_average_speed_download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Average Download Speed"
-        android:textSize="22sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/text_median_speed_download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Median Download Speed"
-        android:textSize="22sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/text_average_speed_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Average Upload Speed"
-        android:textSize="22sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/text_median_speed_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Median Upload Speed"
-        android:textSize="22sp"
-        android:visibility="gone" />
-
-    <!-- Добавление LinearLayout для кнопок -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:padding="16px">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/button_start_test"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/text_current_server"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Start Test" />
+            android:text="Current Server: None"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
 
-        <Button
-            android:id="@+id/button_show_additional_info"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/text_test_status"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Show Additional Info" />
+            android:text=""
+            android:textSize="16sp"
+            android:padding="4dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_speed_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Download Speed"
+            android:textSize="22sp"
+            android:padding="8dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_speed_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Speed"
+            android:textSize="22sp"
+            android:padding="8dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_average_speed_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Download Speed"
+            android:textSize="22sp"
+            android:visibility="gone"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_median_speed_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Median Download Speed"
+            android:textSize="22sp"
+            android:visibility="gone"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_average_speed_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Upload Speed"
+            android:textSize="22sp"
+            android:visibility="gone"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <TextView
+            android:id="@+id/text_median_speed_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Median Upload Speed"
+            android:textSize="22sp"
+            android:visibility="gone"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="26dp">
+
+            <Button
+                android:id="@+id/button_start_test"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start Test"
+                android:background="?attr/colorAccent"
+                android:textColor="@android:color/white"/> <!-- Цвет фона и текста -->
+
+            <Button
+                android:id="@+id/button_show_additional_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Show Info"
+                android:background="?attr/colorAccent"
+                android:textColor="@android:color/white"/> <!-- Цвет фона и текста -->
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
-
-
+</ScrollView>
