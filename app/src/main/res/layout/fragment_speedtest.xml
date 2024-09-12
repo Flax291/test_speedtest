@@ -22,7 +22,7 @@
             android:autoLink="web"
             android:linksClickable="true"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_test_status"
@@ -32,7 +32,7 @@
             android:textSize="16sp"
             android:padding="4dp"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_speed_download"
@@ -42,7 +42,7 @@
             android:textSize="22sp"
             android:padding="8dp"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_speed_upload"
@@ -52,7 +52,7 @@
             android:textSize="22sp"
             android:padding="8dp"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_average_speed_download"
@@ -62,7 +62,7 @@
             android:textSize="22sp"
             android:visibility="gone"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_median_speed_download"
@@ -72,7 +72,7 @@
             android:textSize="22sp"
             android:visibility="gone"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+           /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_average_speed_upload"
@@ -82,7 +82,7 @@
             android:textSize="22sp"
             android:visibility="gone"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <TextView
             android:id="@+id/text_median_speed_upload"
@@ -92,7 +92,7 @@
             android:textSize="22sp"
             android:visibility="gone"
             android:layout_marginBottom="4dp"
-            android:textColor="?attr/colorPrimary"/> <!-- Цвет текста -->
+            /> <!-- Цвет текста -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,8 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Test"
-                android:background="?attr/colorAccent"
-                android:textColor="@android:color/white"/> <!-- Цвет фона и текста -->
+                /> <!-- Цвет фона и текста -->
 
             <Button
                 android:id="@+id/button_show_additional_info"
@@ -118,8 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Show Info"
-                android:background="?attr/colorAccent"
-                android:textColor="@android:color/white"/> <!-- Цвет фона и текста -->
+                /> <!-- Цвет фона и текста -->
         </LinearLayout>
 
     </LinearLayout>
